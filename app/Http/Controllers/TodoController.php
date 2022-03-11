@@ -35,17 +35,19 @@ class TodoController extends Controller
       $this->validate($request, [
           'content' => 'required',
       ]);
-
-      // $todo = TodoNote::create($request->all());
-      // $todo->user_id=Auth::user()->id;
-      // $todo->update();
-
       if(Auth::user()->todonotes()->create($request->all())){
          return response()->json(['status' => 'success']);
       }else{
-         return response()->json(['status' => 'fail']);
+         return response()->json(['status' => 'failed']);
       }
 
+    }
+
+    public function edit($id)
+    {
+      $todonote = TodoNote::find($id);
+      $this->authorize('update', $todonote);
+      return response()->json(['status' => 'success', 'todonote'=>$todonote]);
     }
 
     public function update($id, Request $request)
@@ -53,7 +55,6 @@ class TodoController extends Controller
       $this->validate($request, [
           'content' => 'required',
       ]);
-
 
       $todonote = TodoNote::find($id);
       $this->authorize('update', $todonote);

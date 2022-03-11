@@ -24,9 +24,9 @@ $router->group(['prefix' => 'api'], function () use ($router) {
 });
 
 $router->group(['prefix' => 'api/todonotes'], function () use ($router) {
-      // $router->get('index', 'TodoController@index');
       $router->get('todonotes', 'TodoController@index');
       $router->post('add-todo', 'TodoController@create');
+      $router->get('edit-todo/{id}', 'TodoController@edit');
       $router->put('update-todo/{id}', 'TodoController@update');
       $router->delete('remove-todo/{id}', 'TodoController@remove');
       $router->put('change-completion-status/{id}', 'TodoController@completion');
